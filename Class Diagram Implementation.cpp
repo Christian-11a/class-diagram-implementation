@@ -16,7 +16,7 @@ public:
     string id;
     string name;
     float price;
-    int stock; // Added stock attribute
+    int stock; 
 
     Product() : stock(0) {}
 
@@ -181,7 +181,7 @@ int main() {
     ShoppingCart cart;
     OrderManager orderManager;
     char choice;
-    bool isRunning = true;  // Boolean to control the while loop
+    bool isRunning = true;  
 
     while (isRunning) {
         system("cls"); 
@@ -194,184 +194,197 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
-        if (!isdigit(choice)) {
+        if (!isdigit(choice) || choice < '1' || choice > '4') {
             cout << "Invalid input. Please enter a number between 1 and 4." << endl;
             system("pause");
             continue;
         }
 
         switch (choice) {
-        case '1': {
-            system("cls");
-            cout << "Select Category:\n";
-            cout << "1. Exclusive Pets\n";
-            cout << "2. Huge Pets\n";
-            cout << "3. Titanic Pets\n";
-            int categoryChoice;
-            cin >> categoryChoice;
+            case '1': {
+                // Declare addMoreProducts inside case '1'
+                bool addMoreProducts = true;
+                while (addMoreProducts) {
+                    system("cls");
+                    cout << "Select Category:\n";
+                    cout << "1. Exclusive Pets\n";
+                    cout << "2. Huge Pets\n";
+                    cout << "3. Titanic Pets\n";
+                    cout << "Enter your choice: ";
+                    int categoryChoice;
+                    cin >> categoryChoice;
 
-            switch (categoryChoice) {
-            case 1: {
-                // Display Exclusive Pets
-                cout << "\nExclusive Pets:\n";
-                viewProducts(exclusivePets, 5);
+                    switch (categoryChoice) {
+                        case 1: {
+                            // Display Exclusive Pets
+                            cout << "\nExclusive Pets:\n";
+                            viewProducts(exclusivePets, 5);
 
-                // Add products to cart
-                string productId;
-                cout << "Enter the ID of the pet to add: ";
-                cin >> productId;
-                bool productFound = false;
+                            // Add products to cart
+                            string productId;
+                            cout << "Enter the ID of the pet to add: ";
+                            cin >> productId;
+                            bool productFound = false;
 
-                for (int i = 0; i < 5; i++) {
-                    if (exclusivePets[i].id == productId) {
-                        int quantity;
-                        bool validQuantity = false;
+                            for (int i = 0; i < 5; i++) {
+                                if (exclusivePets[i].id == productId) {
+                                    int quantity;
+                                    bool validQuantity = false;
 
-                        while (!validQuantity) {
-                            cout << "Enter quantity: ";
-                            cin >> quantity;
+                                    while (!validQuantity) {
+                                        cout << "Enter quantity: ";
+                                        cin >> quantity;
 
-                            if (quantity > 0 && quantity <= exclusivePets[i].stock) {
-                                cart.addProduct(&exclusivePets[i], quantity); // Pass address of the product
-                                validQuantity = true;
-                                productFound = true;
-                            } else if (quantity <= 0) {
-                                cout << "Invalid quantity! Quantity must be greater than 0." << endl;
-                            } else {
-                                cout << "Insufficient stock! Please enter a smaller quantity." << endl;
+                                        if (quantity > 0 && quantity <= exclusivePets[i].stock) {
+                                            cart.addProduct(&exclusivePets[i], quantity); // Pass address of the product
+                                            validQuantity = true;
+                                            productFound = true;
+                                        } else if (quantity <= 0) {
+                                            cout << "Invalid quantity! Quantity must be greater than 0." << endl;
+                                        } else {
+                                            cout << "Insufficient stock! Please enter a smaller quantity." << endl;
+                                        }
+                                    }
+                                    break; 
+                                }
                             }
+
+                            if (!productFound) {
+                                cout << "Invalid Product ID." << endl;
+                                system("pause");
+                            }
+                            break; // Exit switch (categoryChoice)
                         }
-                        break;
+                        case 2: {
+                            // Display Huge Pets
+                            cout << "\nHuge Pets:\n";
+                            viewProducts(hugePets, 5);
+
+                            // Add products to cart
+                            string productId;
+                            cout << "Enter the ID of the pet to add: ";
+                            cin >> productId;
+                            bool productFound = false;
+
+                            for (int i = 0; i < 5; i++) {
+                                if (hugePets[i].id == productId) {
+                                    int quantity;
+                                    bool validQuantity = false;
+
+                                    while (!validQuantity) {
+                                        cout << "Enter quantity: ";
+                                        cin >> quantity;
+
+                                        if (quantity > 0 && quantity <= hugePets[i].stock) {
+                                            cart.addProduct(&hugePets[i], quantity); // Pass address of the product
+                                            validQuantity = true;
+                                            productFound = true;
+                                        } else if (quantity <= 0) {
+                                            cout << "Invalid quantity! Quantity must be greater than 0." << endl;
+                                        } else {
+                                            cout << "Insufficient stock! Please enter a smaller quantity." << endl;
+                                        }
+                                    }
+                                    break; 
+                                }
+                            }
+
+                            if (!productFound) {
+                                cout << "Invalid Product ID." << endl;
+                                system("pause");
+                            }
+                            break; 
+                        }
+                        case 3: {
+                            // Display Titanic Pets
+                            cout << "\nTitanic Pets:\n";
+                            viewProducts(titanicPets, 5);
+
+                            // Add products to cart
+                            string productId;
+                            cout << "Enter the ID of the pet to add: ";
+                            cin >> productId;
+                            bool productFound = false;
+
+                            for (int i = 0; i < 5; i++) {
+                                if (titanicPets[i].id == productId) {
+                                    int quantity;
+                                    bool validQuantity = false;
+
+                                    while (!validQuantity) {
+                                        cout << "Enter quantity: ";
+                                        cin >> quantity;
+
+                                        if (quantity > 0 && quantity <= titanicPets[i].stock) {
+                                            cart.addProduct(&titanicPets[i], quantity); // Pass address of the product
+                                            validQuantity = true;
+                                            productFound = true;
+                                        } else if (quantity <= 0) {
+                                            cout << "Invalid quantity! Quantity must be greater than 0." << endl;
+                                        } else {
+                                            cout << "Insufficient stock! Please enter a smaller quantity." << endl;
+                                        }
+                                    }
+                                    break; // Exit for loop
+                                }
+                            }
+
+                            if (!productFound) {
+                                cout << "Invalid Product ID." << endl;
+                                system("pause");
+                            }
+                            break; // Exit switch (categoryChoice)
+                        }
+                        default:
+                            cout << "Invalid category choice." << endl;
+                            system("pause");
+                            break;
+                    }
+
+                    // Ask if the user wants to add another product
+                    cout << "\nDo you want to add another product? (y/n): ";
+                    char addMoreChoice;
+                    cin >> addMoreChoice;
+                    addMoreProducts = (toupper(addMoreChoice) == 'Y');
+                }
+                break; // Exit case '1'
+            }
+            case '2': {
+                system("cls");
+                cout << "Shopping Cart:\n";
+                cart.viewCart();
+
+                if (!cart.isEmpty()) {
+                    cout << "\nDo you want to proceed to checkout? (y/n): ";
+                    char checkoutChoice;
+                    cin >> checkoutChoice;
+
+                    if (toupper(checkoutChoice) == 'Y') {
+                        float totalAmount = cart.checkout();
+                        // Place order and reset cart
+                        orderManager.placeOrder(cart.getCartItems(), cart.getQuantities(), cart.getItemCount(), totalAmount);
+                        cart.clearCart(); 
                     }
                 }
-
-                if (!productFound) {
-                    cout << "Invalid Product ID." << endl;
-                    system ("pause");
-                }
+                system("pause");
                 break;
             }
-            case 2: {
-                // Display Huge Pets
-                cout << "\nHuge Pets:\n";
-                viewProducts(hugePets, 5);
-
-                // Add products to cart
-                string productId;
-                cout << "Enter the ID of the pet to add: ";
-                cin >> productId;
-                bool productFound = false;
-
-                for (int i = 0; i < 5; i++) {
-                    if (hugePets[i].id == productId) {
-                        int quantity;
-                        bool validQuantity = false;
-
-                        while (!validQuantity) {
-                            cout << "Enter quantity: ";
-                            cin >> quantity;
-
-                            if (quantity > 0 && quantity <= hugePets[i].stock) {
-                                cart.addProduct(&hugePets[i], quantity); // Pass address of the product
-                                validQuantity = true;
-                                productFound = true;
-                            } else if (quantity <= 0) {
-                                cout << "Invalid quantity! Quantity must be greater than 0." << endl;
-                            } else {
-                                cout << "Insufficient stock! Please enter a smaller quantity." << endl;
-                            }
-                        }
-                        break;
-                    }
-                }
-
-                if (!productFound) {
-                    cout << "Invalid Product ID." << endl;
-                }
+            case '3': {
+                system("cls");
+                cout << "Order History:\n";
+                orderManager.viewOrders();
+                system("pause");
                 break;
             }
-            case 3: {
-                // Display Titanic Pets
-                cout << "\nTitanic Pets:\n";
-                viewProducts(titanicPets, 5);
-
-                // Add products to cart
-                string productId;
-                cout << "Enter the ID of the pet to add: ";
-                cin >> productId;
-                bool productFound = false;
-
-                for (int i = 0; i < 5; i++) {
-                    if (titanicPets[i].id == productId) {
-                        int quantity;
-                        bool validQuantity = false;
-
-                        while (!validQuantity) {
-                            cout << "Enter quantity: ";
-                            cin >> quantity;
-
-                            if (quantity > 0 && quantity <= titanicPets[i].stock) {
-                                cart.addProduct(&titanicPets[i], quantity); // Pass address of the product
-                                validQuantity = true;
-                                productFound = true;
-                            } else if (quantity <= 0) {
-                                cout << "Invalid quantity! Quantity must be greater than 0." << endl;
-                            } else {
-                                cout << "Insufficient stock! Please enter a smaller quantity." << endl;
-                            }
-                        }
-                        break;
-                    }
-                }
-
-                if (!productFound) {
-                    cout << "Invalid Product ID." << endl;
-                }
+            case '4': {
+                isRunning = false;  
+                cout << "Exiting the PetX99 Online Store. Thank you for visiting!" << endl;
                 break;
             }
             default:
-                cout << "Invalid category choice." << endl;
-                system ("pause");
+                cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+                system("pause");
                 break;
-            }
-            break;
-        }
-        case '2': {
-            system("cls");
-            cout << "Shopping Cart:\n";
-            cart.viewCart();
-
-            if (!cart.isEmpty()) {
-                cout << "\nDo you want to proceed to checkout? (y/n): ";
-                char checkoutChoice;
-                cin >> checkoutChoice;
-
-                if (toupper(checkoutChoice) == 'Y') {
-                    float totalAmount = cart.checkout();
-                    // Place order and reset cart
-                    orderManager.placeOrder(cart.getCartItems(), cart.getQuantities(), cart.getItemCount(), totalAmount);
-                    cart.clearCart(); 
-                }
-            }
-            system("pause");
-            break;
-        }
-        case '3': {
-            system("cls");
-            cout << "Order History:\n";
-            orderManager.viewOrders();
-            system("pause");
-            break;
-        }
-        case '4': {
-            isRunning = false;  // Exit the program
-            cout << "Exiting the PetX99 Online Store. Thank you for visiting!" << endl;
-            break;
-        }
-        default:
-            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
-            system ("pause");
-            break;
         }
     }
 
